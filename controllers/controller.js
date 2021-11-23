@@ -18,11 +18,11 @@ const controller = {
         });
         const {error} = registerSchema.validate(req.body);
         if (error) { // if error while validating
-            return next(error); // will catch by error middleware, bcz that middleware doesn'e accept async function error
+            return next(error); // will catch by error middleware, bcz that middleware doesn't accept async function error
         }
         try { // verify email
             const exists = await User.exists({email: req.body.email});
-            if (exists) {
+            if (exists) { // if email already exists
                 return next(CustomErrorHandler.exists('email already exists'));
             }
         } catch (err) {
@@ -112,6 +112,7 @@ const controller = {
             let userId;
             try {
                 const {_id} = TokenService.verify(refreshToken.token, REFRESH_KEY);
+                console.log("id", _id)
                 userId = _id; // destructing _id from payloads and save in userId
             } catch (err) {
                 return next(err);
@@ -149,7 +150,7 @@ const controller = {
         }
         // delete refresh token from db
         try {
-            await RefreshToken.deleteOne({toekn: req.body.refresh_token});
+            await RefreshToken.deleteOne({token: req.body.refresh_token});
         } catch (err) {
             return next(err);
         }

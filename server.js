@@ -5,12 +5,13 @@ import errorHandler from './middlewares/error-handler';
 import connectDB from './db/database-connection';
 const app = express();
 
-connectDB();
-app.use(express.json());
-app.use('/v1/api', route);
+connectDB(); // db connections
 
-app.use(errorHandler);
+app.use(express.json()); // middleware to accept JSON data from client side
+app.use('/v1/api', route); // routing
 
-app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}!`)
+app.use(errorHandler); // to use express error handling using next(err)
+
+app.listen(PORT, () => { // creating server
+    console.log(`app listening on port ${PORT}!`)
 });

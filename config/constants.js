@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-// coming from .env and send sending globally
+// coming from .env and sending keys globally
 const {
     PORT,
     DEBUG_MODE,

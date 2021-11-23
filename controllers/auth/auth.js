@@ -3,13 +3,13 @@ import TokenService from "../../services/TokenService";
 
 // middleware - to authenticate user - is valid or not.
 const auth = (req, res, next) => {
-    let authHeader = req.headers.authorization; // header - Authorization : Bearer token
+    let authHeader = req.headers.authorization; // header - Authorization : Bearer access_token
     if (!authHeader) {
         return next(CustomErrorHandler.unAuthorized());
     }
     const token = authHeader.split(' ')[1]; // split space and return array
     try {
-        const {_id, role} = TokenService.verify(token); // from token extracts payloads
+        const {_id, role} = TokenService.verify(token); // from token extracts payloads and verify token
         const user = { // store data
             _id: _id,
             role: role
